@@ -1,0 +1,30 @@
+---
+- name: copy default config file to server {{ ansible_default_ipv4.address }}
+  copy:
+    src: files/filebeat_files/
+    dest: /home/filebeat/
+  tags: [suse11]
+
+- name: replace config file
+  copy:
+    remote_src: True
+    src: /home/filebeat/filebeat.yml
+    dest: /etc/filebeat/filebeat.yml
+  tags: [suse11]
+
+- name: config filebeat.yml
+  command: 'sed -i "s/HOSTREPLACE/$HOSTNAME/g" /etc/filebeat/filebeat.yml'
+  tags: [suse11]
+
+- name: fix SUSE 11 filebeat init file
+  copy:
+    remote_src: True
+    src: /home/filebeat/suse_11_init_filebeat
+    dest: /etc/init.d/filebeat
+  tags: [suse11]
+
+#- name: start service filebeat, if not started
+#  service:
+#    name: filebeat
+#    state: started
+#  tags: [suse11]

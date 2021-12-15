@@ -1,0 +1,20 @@
+---
+- name: Check if filebeat is installed
+  shell: 'echo $(rpm -q filebeat > /dev/null; echo $?)'
+  register: rpm_check
+  tags: [rpm]
+
+- name: copy rpm package file to server {{ ansible_default_ipv4.address }}
+  copy:
+    src: files/filebeat_files/
+    dest: /home/filebeat/
+  when: rpm_check.stdout.find('0')
+  tags: [rpm]
+
+- name: install rpm
+    #yum:
+    # name: /home/filebeat/{{ FILEBEAT_RPM_NAME }}
+    # state: present
+  command: "rpm -ivh /home/filebeat/{{ FILEBEAT_RPM_NAME }}"
+  when: rpm_check.stdout.find('0')
+  tags: [rpm]

@@ -1,0 +1,18 @@
+---
+- hosts: all
+  tasks:
+    - name: install filebeat
+      include_role:
+        name: roles/main
+      tags: [rpm]
+    - name: SLES15
+      include_role:
+        name: roles/SLES15
+      when: 'ansible_service_mgr == "systemd"'
+      tags: [suse15]
+
+    - name: SLES11
+      include_role:
+        name: roles/SLES11
+      when: 'ansible_service_mgr == "service"'
+      tags: [suse11]
