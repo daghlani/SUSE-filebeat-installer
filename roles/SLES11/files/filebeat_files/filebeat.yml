@@ -5,9 +5,12 @@ filebeat.inputs:
     - /var/log/*.log
     #- /opt/IBM/HTTPServer/logs/*.log
     #- /opt/IBM/WebSphere/AppServer/profiles/HOSTREPLACE/logs/HOSTREPLACE/System*.log
+    #- /log/OFFLOG/*/*.log
+    #- /log/OFFLOG/EMTA/*.log
     #- c:\programdata\elasticsearch\logs\*
-
-# exclude_files: ['.*-console.log', '.*-error.log']
+  fields:
+     host_ip: 192.168.100.100
+# exclude_files: ['/log/OFFLOG/BACKUP/*', '/log/OFFLOG/TEMP/*', '.*-console.log', '.*-error.log']
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
@@ -18,8 +21,8 @@ setup.template.settings:
 
 setup.kibana:
 output.kafka:
-  hosts: ["10.10.10.10:9092", "10.10.10.11:9092"]
-  topic: "FB_INPUT"
+  hosts: ["172.16.26.79:9092", "172.16.26.80:9092"]
+  topic: "EMTA_FB_INPUT"
   codec.json:
     pretty: false
 

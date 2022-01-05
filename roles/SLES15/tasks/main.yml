@@ -13,7 +13,7 @@
   tags: [suse15]
 
 - name: config filebeat.yml
-  command: 'sed -i "s/HOSTREPLACE/$HOSTNAME/g" /etc/filebeat/filebeat.yml'
+  command: 'sed -i "s/HOSTREPLACE/$HOSTNAME/g" /etc/filebeat/filebeat.yml; sed -i "s/192.168.100.100/$(hostname -I)/g" /etc/filebeat/filebeat.yml'
   tags: [suse15]
 
 #- name: start service filebeat, if not started
