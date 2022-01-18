@@ -7,7 +7,7 @@ pipeline {
     }
 
     parameters {
-        text  (  name: 'HOSTS', defaultValue: '''[hosts]\n\n\n\n''' )
+        text  (  name: 'HOSTS', defaultValue: '''[hosts]\n\n\n\n\n\n\n\n[all:vars]\nansible_user=root''' )
     }
     
     stages {
